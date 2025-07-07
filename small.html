@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>D-day 미니 카드</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+
+    :root {
+      --bg: #f7f9fc;
+      --text-main: #2d3436;
+      --text-sub: #636e72;
+      --highlight: #0984e3;
+      --shadow: rgba(0, 0, 0, 0.05);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1e1e1e;
+        --text-main: #ffffff;
+        --text-sub: #b2bec3;
+        --highlight: #74b9ff;
+        --shadow: rgba(255, 255, 255, 0.08);
+      }
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      background: transparent;
+      font-family: 'Noto Sans KR', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      min-height: 100vh;
+    }
+
+    .card {
+      background: var(--bg);
+      padding: 20px 25px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px var(--shadow);
+      text-align: center;
+      min-width: 220px;
+      max-width: 100%;
+      border: 1px solid rgba(200, 200, 200, 0.15);
+    }
+
+    .baby-name {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .weeks-info {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text-sub);
+      margin-bottom: 16px;
+    }
+
+    .d-day {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--highlight);
+      margin-bottom: 4px;
+    }
+
+    .label {
+      font-size: 0.9rem;
+      color: var(--text-sub);
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="baby-name" id="babyName">수복이</div>
+    <div class="weeks-info" id="weeksText">임신 9주 2일차</div>
+    <div class="d-day" id="dDay">D-215</div>
+    <div class="label" id="dueText">2026년 2월 7일 예정</div>
+  </div>
+
+  <script>
+    function getQueryParam(key, def = '') {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(key) || def;
+    }
+
+    const name = getQueryParam('name', '수복이');
+    const due = getQueryParam('due', '2026-02-07');
+
+    const dueDate = new Date(`${due}T00:00:00+09:00`);
+    const today = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Seoul" }));
+
+    // 임신 0일은 출산예정일 - 280일
+    const conceptionDate = new Date(dueDate.getTime() - 280 * 24 * 60 * 60 * 1000);
+    const daysPassed = Math.floor((today - conceptionDate) / (1000 * 60 * 60 * 24));
+    const weeks = Math.floor(daysPassed / 7);
+    const days = daysPassed % 7;
+
+    const diffDays = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
+
+    // 텍스트 설정
+    document.getElementById('babyName').textContent = name;
+    document.getElementById('dDay').textContent = diffDays > 0 ? `D-${diffDays}` : '🎉 출산일 🎉';
+    document.getElementById('dueText').textContent = `${dueDate.toLocaleDateString('ko-KR', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    })} 예정`;
+
+    const weeksText = days === 0 ? `임신 ${weeks}주차` : `임신 ${weeks}주 ${days}일차`;
+    document.getElementById('weeksText').textContent = weeksText;
+  </script>
+</body>
+</html>
