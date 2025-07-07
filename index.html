@@ -18,7 +18,8 @@
             background: transparent;
             min-height: 100vh;
             margin: 0;
-            padding: 15px;
+            /* 그림자 크기를 고려한 패딩 (최대 그림자 크기 50px + 여유 15px) */
+            padding: 65px 65px;
             box-sizing: border-box;
             display: flex;
             justify-content: center;
@@ -77,8 +78,6 @@
             margin-bottom: 25px;
             opacity: 0.8;
         }
-        
-
         
         .countdown {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 240, 245, 0.9) 100%);
@@ -235,7 +234,8 @@
         /* 모바일 최적화 */
         @media (max-width: 768px) {
             body {
-                padding: 10px;
+                /* 모바일에서는 그림자 크기를 고려한 작은 패딩 */
+                padding: 45px 45px;
             }
             
             .container {
@@ -256,7 +256,8 @@
         /* 아주 작은 화면 */
         @media (max-width: 480px) {
             body {
-                padding: 5px;
+                /* 작은 화면에서도 그림자가 잘리지 않도록 최소 패딩 유지 */
+                padding: 35px 35px;
             }
             
             .container {
@@ -271,6 +272,17 @@
             
             .time-unit {
                 padding: 10px 5px;
+            }
+        }
+        
+        /* 매우 작은 화면에서도 그림자가 보이도록 */
+        @media (max-width: 350px) {
+            body {
+                padding: 25px 25px;
+            }
+            
+            .container {
+                min-width: 250px;
             }
         }
     </style>
