@@ -162,12 +162,14 @@
     }
 
     .pregnancy-info {
-      background: linear-gradient(135deg, rgba(116, 185, 255, 0.15), rgba(163, 203, 255, 0.15));
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border-radius: 20px;
       padding: 25px;
       margin-bottom: 20px;
-      border: 2px solid rgba(116, 185, 255, 0.3);
-      box-shadow: 0 8px 25px rgba(116, 185, 255, 0.1);
+      border: 1px solid rgba(116, 185, 255, 0.2);
+      box-shadow: 0 8px 25px rgba(116, 185, 255, 0.08);
       position: relative;
     }
 
@@ -204,25 +206,25 @@
     .progress-bar {
       width: 100%;
       height: 12px;
-      background: rgba(116, 185, 255, 0.2);
+      background: rgba(116, 185, 255, 0.13);
       border-radius: 15px;
       overflow: hidden;
       margin-top: 15px;
-      border: 1px solid rgba(116, 185, 255, 0.3);
+      border: 1px solid rgba(116, 185, 255, 0.2);
     }
 
     .progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, #74b9ff, #0984e3, #74b9ff);
-      background-size: 200% 100%;
+      background: #74b9ff;
       border-radius: 15px;
       transition: width 0.3s ease;
       animation: progressShine 2s ease-in-out infinite;
     }
 
     @keyframes progressShine {
-      0% { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
+      0% { opacity: 1; }
+      50% { opacity: 0.9; }
+      100% { opacity: 1; }
     }
 
     .target-date {
@@ -234,97 +236,79 @@
     }
 
     /* 다크모드 스타일 - Apple Liquid Glass Style */
-    .dark-mode {
-      background: #252525;
-    }
-
-    .dark-mode .container {
-      background: rgba(42, 42, 42, 0.7);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.3),
-        0 0 0 1px rgba(255, 255, 255, 0.08),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    }
-
-    .dark-mode .container::before {
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
-    }
-
-    .dark-mode .title,
-    .dark-mode .weeks-info,
-    .dark-mode .days-number,
-    .dark-mode .time-number,
-    .dark-mode .weeks-number {
-      color: #ffffff;
-      text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-    }
-
-    .dark-mode .subtitle,
-    .dark-mode .days-text,
-    .dark-mode .target-date,
-    .dark-mode .time-label {
-      color: rgba(255, 255, 255, 0.65);
-    }
-
-    .dark-mode .countdown {
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    }
-
-    .dark-mode .countdown::before {
-      background: linear-gradient(45deg, 
-        rgba(255, 255, 255, 0.05), 
-        rgba(255, 255, 255, 0.02), 
-        rgba(255, 255, 255, 0.08), 
-        rgba(255, 255, 255, 0.05));
-      opacity: 0.4;
-    }
-
-    .dark-mode .pregnancy-info {
-      background: rgba(100, 150, 255, 0.08);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(100, 150, 255, 0.2);
-      box-shadow: 
-        0 8px 32px rgba(100, 150, 255, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    }
-
-    .dark-mode .time-unit {
-      background: rgba(255, 255, 255, 0.06);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 
-        0 4px 16px rgba(0, 0, 0, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08);
-    }
-
-    .dark-mode .progress-bar {
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .dark-mode .progress-fill {
-      background: linear-gradient(90deg, 
-        rgba(100, 150, 255, 0.8), 
-        rgba(120, 170, 255, 0.9), 
-        rgba(100, 150, 255, 0.8));
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
-      box-shadow: 
-        0 0 20px rgba(100, 150, 255, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    @media (prefers-color-scheme: dark) {
+      body, .dark-mode {
+        background: #252525 !important;
+      }
+      .container, .dark-mode .container {
+        background: rgba(42, 42, 42, 0.7) !important;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 
+          0 8px 32px rgba(0, 0, 0, 0.3),
+          0 0 0 1px rgba(255, 255, 255, 0.08),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      }
+      .title, .weeks-info, .days-number, .time-number, .weeks-number {
+        color: #fff;
+        text-shadow: 0 0 20px rgba(255,255,255,0.1);
+      }
+      .subtitle, .days-text, .target-date, .time-label {
+        color: rgba(255, 255, 255, 0.65);
+      }
+      .countdown {
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: 
+          0 8px 32px rgba(0, 0, 0, 0.2),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      }
+      .countdown::before {
+        background: linear-gradient(45deg, 
+          rgba(255, 255, 255, 0.05), 
+          rgba(255, 255, 255, 0.02), 
+          rgba(255, 255, 255, 0.08), 
+          rgba(255, 255, 255, 0.05));
+        opacity: 0.4;
+      }
+      .pregnancy-info {
+        background: rgba(100, 150, 255, 0.08);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(100, 150, 255, 0.2);
+        box-shadow: 
+          0 8px 32px rgba(100, 150, 255, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      }
+      .time-unit {
+        background: rgba(255, 255, 255, 0.06);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 
+          0 4px 16px rgba(0, 0, 0, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      }
+      .progress-bar {
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .progress-fill {
+        background: linear-gradient(90deg, 
+          rgba(100, 150, 255, 0.8), 
+          rgba(120, 170, 255, 0.9), 
+          rgba(100, 150, 255, 0.8));
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        box-shadow: 
+          0 0 20px rgba(100, 150, 255, 0.3),
+          inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      }
     }
 
     /* 모바일 최적화 */
@@ -442,64 +426,6 @@
   </div>
 
   <script>
-    // 다크모드 감지 및 설정 함수
-    function setTheme() {
-      const body = document.body;
-      
-      // 여러 방법으로 다크모드 감지
-      const isDarkMode = 
-        // 1. 시스템 다크모드 감지
-        window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ||
-        // 2. 부모 요소의 배경색 확인 (Notion 등에서 유용)
-        isParentDark() ||
-        // 3. 로컬 스토리지 확인
-        localStorage.getItem('theme') === 'dark' ||
-        // 4. 문서 속성 확인
-        document.documentElement.getAttribute('data-theme') === 'dark';
-      
-      if (isDarkMode) {
-        body.classList.add('dark-mode');
-      } else {
-        body.classList.remove('dark-mode');
-      }
-    }
-
-    // 부모 요소의 배경색을 확인하여 다크모드 판단
-    function isParentDark() {
-      try {
-        const computedStyle = window.getComputedStyle(document.body);
-        const backgroundColor = computedStyle.backgroundColor;
-        
-        // RGB 값 추출
-        const rgb = backgroundColor.match(/\d+/g);
-        if (rgb && rgb.length >= 3) {
-          const r = parseInt(rgb[0]);
-          const g = parseInt(rgb[1]);
-          const b = parseInt(rgb[2]);
-          
-          // 밝기 계산 (0.299*R + 0.587*G + 0.114*B)
-          const brightness = (r * 0.299 + g * 0.587 + b * 0.114);
-          return brightness < 128; // 128보다 작으면 어두운 색
-        }
-      } catch (e) {
-        console.log('배경색 감지 실패:', e);
-      }
-      return false;
-    }
-
-    // 미디어 쿼리 변경 감지
-    if (window.matchMedia) {
-      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-      mediaQuery.addEventListener('change', setTheme);
-    }
-
-    // 초기 테마 설정
-    setTheme();
-
-    // 주기적으로 테마 확인 (Notion 등에서 동적 변경 대응)
-    setInterval(setTheme, 1000);
-
-    // 기존 카운트다운 로직
     const targetDate = new Date('2026-02-07T00:00:00+09:00');
     const referenceDate = new Date('2025-07-07T00:00:00+09:00');
     const referenceWeeks = 9;
