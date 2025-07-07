@@ -12,9 +12,12 @@
       box-sizing: border-box;
     }
 
+    html, body {
+      background: transparent !important;
+    }
+
     body {
       font-family: 'Noto Sans KR', sans-serif;
-      background: transparent !important;
       min-height: 100vh;
       padding: 65px;
       display: flex;
@@ -237,10 +240,10 @@
 
     /* 다크모드 스타일 - Apple Liquid Glass Style */
     @media (prefers-color-scheme: dark) {
-      body, .dark-mode {
+      html, body {
         background: transparent !important;
       }
-      .container, .dark-mode .container {
+      .container {
         background: rgba(42, 42, 42, 0.7) !important;
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
