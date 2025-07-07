@@ -225,6 +225,53 @@
       opacity: 0.8;
     }
 
+    /* 다크모드 스타일 */
+    .dark-mode {
+      background: #1a1a1a;
+    }
+
+    .dark-mode .container {
+      background: rgba(30, 30, 30, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .dark-mode .title,
+    .dark-mode .weeks-info,
+    .dark-mode .days-number,
+    .dark-mode .time-number,
+    .dark-mode .weeks-number {
+      color: #f1f1f1;
+    }
+
+    .dark-mode .subtitle,
+    .dark-mode .days-text,
+    .dark-mode .target-date,
+    .dark-mode .time-label {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .dark-mode .countdown,
+    .dark-mode .pregnancy-info,
+    .dark-mode .time-unit {
+      background: rgba(50, 50, 50, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 
+        0 2px 10px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .dark-mode .progress-bar {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .dark-mode .progress-fill {
+      background: linear-gradient(90deg, #6c5ce7, #00cec9);
+    }
+
     /* 모바일 최적화 */
     @media (max-width: 500px) {
       body {
@@ -298,54 +345,6 @@
         min-width: 250px;
       }
     }
-
-    @media (prefers-color-scheme: dark) {
-    body {
-        background: #1a1a1a;
-    }
-
-    .container {
-        background: rgba(30, 30, 30, 0.8);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        box-shadow: 
-            0 8px 32px rgba(0, 0, 0, 0.5),
-            0 0 0 1px rgba(255, 255, 255, 0.05),
-            inset 0 1px 0 rgba(255, 255, 255, 0.05);
-    }
-
-    .title,
-    .weeks-info,
-    .days-number,
-    .time-number,
-    .weeks-number {
-        color: #f1f1f1;
-    }
-
-    .subtitle,
-    .days-text,
-    .target-date,
-    .time-label {
-        color: rgba(255, 255, 255, 0.7);
-    }
-
-    .countdown,
-    .pregnancy-info,
-    .time-unit {
-        background: rgba(50, 50, 50, 0.7);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        box-shadow: 
-            0 2px 10px rgba(0, 0, 0, 0.3),
-            inset 0 1px 0 rgba(255, 255, 255, 0.05);
-    }
-
-    .progress-bar {
-        background: rgba(255, 255, 255, 0.1);
-    }
-
-    .progress-fill {
-        background: linear-gradient(90deg, #6c5ce7, #00cec9);
-    }
-}
   </style>
 </head>
 <body>
@@ -388,6 +387,64 @@
   </div>
 
   <script>
+    // 다크모드 감지 및 설정 함수
+    function setTheme() {
+      const body = document.body;
+      
+      // 여러 방법으로 다크모드 감지
+      const isDarkMode = 
+        // 1. 시스템 다크모드 감지
+        window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ||
+        // 2. 부모 요소의 배경색 확인 (Notion 등에서 유용)
+        isParentDark() ||
+        // 3. 로컬 스토리지 확인
+        localStorage.getItem('theme') === 'dark' ||
+        // 4. 문서 속성 확인
+        document.documentElement.getAttribute('data-theme') === 'dark';
+      
+      if (isDarkMode) {
+        body.classList.add('dark-mode');
+      } else {
+        body.classList.remove('dark-mode');
+      }
+    }
+
+    // 부모 요소의 배경색을 확인하여 다크모드 판단
+    function isParentDark() {
+      try {
+        const computedStyle = window.getComputedStyle(document.body);
+        const backgroundColor = computedStyle.backgroundColor;
+        
+        // RGB 값 추출
+        const rgb = backgroundColor.match(/\d+/g);
+        if (rgb && rgb.length >= 3) {
+          const r = parseInt(rgb[0]);
+          const g = parseInt(rgb[1]);
+          const b = parseInt(rgb[2]);
+          
+          // 밝기 계산 (0.299*R + 0.587*G + 0.114*B)
+          const brightness = (r * 0.299 + g * 0.587 + b * 0.114);
+          return brightness < 128; // 128보다 작으면 어두운 색
+        }
+      } catch (e) {
+        console.log('배경색 감지 실패:', e);
+      }
+      return false;
+    }
+
+    // 미디어 쿼리 변경 감지
+    if (window.matchMedia) {
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      mediaQuery.addEventListener('change', setTheme);
+    }
+
+    // 초기 테마 설정
+    setTheme();
+
+    // 주기적으로 테마 확인 (Notion 등에서 동적 변경 대응)
+    setInterval(setTheme, 1000);
+
+    // 기존 카운트다운 로직
     const targetDate = new Date('2026-02-07T00:00:00+09:00');
     const referenceDate = new Date('2025-07-07T00:00:00+09:00');
     const referenceWeeks = 9;
